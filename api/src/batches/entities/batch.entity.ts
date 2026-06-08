@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { User } from "../../users/entities/user.entity";
+import { Lead } from "../../leads/entities/lead.entity";
 
 export enum BatchStatus {
     PENDING = 'pending',
@@ -31,7 +32,10 @@ export class Batch {
         enum: BatchStatus,
         default: BatchStatus.PENDING
     })
-    status!: BatchStatus; 
+    status!: BatchStatus;
+    
+    @OneToMany(() => Lead, (lead) => lead.batch)
+    leads!: Lead[]
 
     @Column({
         default: 0

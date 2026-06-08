@@ -26,7 +26,7 @@ export class Lead {
     @Column()
     website!: string; 
 
-    @ManyToOne(() => Batch)
+    @ManyToOne(() => Batch, (batch) => batch.leads)
     @JoinColumn({ name: 'batchId' })
     batch!: Batch;
 
