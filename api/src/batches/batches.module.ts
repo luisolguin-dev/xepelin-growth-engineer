@@ -8,6 +8,7 @@ import { BATCH_QUEUE } from './batches.constants';
 import { BullModule } from '@nestjs/bullmq';
 import { WebhookModule } from '../webhook/webhook.module';
 import { BatchProcessor } from './processor/batch.processor';
+import { AiEnrichmentService } from './processor/ai-enrichment-service';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { BatchProcessor } from './processor/batch.processor';
             WebhookModule,
           ],
   controllers: [BatchesController],
-  providers: [BatchesService, BatchProcessor],
+  providers: [BatchesService, BatchProcessor, AiEnrichmentService],
 })
 export class BatchesModule {}

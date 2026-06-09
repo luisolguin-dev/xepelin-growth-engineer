@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Lead, LeadStatus } from '../../leads/entities/lead.entity';
 import { NotFoundException } from '@nestjs/common';
 import { WebhookService } from '../../webhook/webhook.service';
+import { AiEnrichmentService } from './ai-enrichment-service';
 
 @Processor(BATCH_QUEUE)
 export class BatchProcessor extends WorkerHost {
@@ -18,6 +19,7 @@ export class BatchProcessor extends WorkerHost {
         private leadRepository:Repository<Lead>,
 
         private webhookService: WebhookService,
+        private aiEnrichmentService: AiEnrichmentService,
     ) {
         super()
     }
@@ -47,8 +49,8 @@ export class BatchProcessor extends WorkerHost {
             where: { batchId }
         });
 
-        batch.totalReady = updatedLeads.filter(l => l.status === LeadStatus.READY).length;
-        batch.totalFailed = updatedLeads.filter(l => l.status === LeadStatus.FAILED).length;
+        batch.totalReady = updatedLeads.filter(l => l.status === LeadStatus.AI_READY).length;
+        batch.totalFailed = updatedLeads.filter(l => l.status === LeadStatus.FAILED || l.status === LeadStatus.AI_FAILED).length;
         batch.status = BatchStatus.COMPLETED;
 
         await this.batchRepository.save(batch);
@@ -103,6 +105,24 @@ export class BatchProcessor extends WorkerHost {
 
             lead.status = LeadStatus.READY; 
             await this.leadRepository.save(lead);
+
+            lead.status = LeadStatus.AI_ENRICHING;
+            await this.leadRepository.save(lead);
+
+            try {
+                const aiResult = await this.aiEnrichmentService.enrichLead(lead);
+
+                lead.prospectFitScore = aiResult.prospectFitScore;
+                lead.iceBreaker = aiResult.iceBreaker;
+                lead.painHypothesis = aiResult.painHypothesis; 
+                lead.status = LeadStatus.AI_READY
+                await this.leadRepository.save(lead);
+            } catch(error) {
+                lead.status = LeadStatus.AI_FAILED; 
+                lead.aiErrorReason = error instanceof Error ? error.message: "Unknown error";
+                await this.leadRepository.save(lead);
+                
+            }
 
         } catch (error) {
             lead.status = LeadStatus.FAILED;
