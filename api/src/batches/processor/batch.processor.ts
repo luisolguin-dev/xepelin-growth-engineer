@@ -6,6 +6,7 @@ import { Batch, BatchStatus } from '../entities/batch.entity';
 import { Repository } from 'typeorm';
 import { Lead, LeadStatus } from '../../leads/entities/lead.entity';
 import { NotFoundException } from '@nestjs/common';
+import { WebhookService } from '../../webhook/webhook.service';
 
 @Processor(BATCH_QUEUE)
 export class BatchProcessor extends WorkerHost {
@@ -14,12 +15,15 @@ export class BatchProcessor extends WorkerHost {
         private batchRepository:Repository<Batch>, 
 
         @InjectRepository(Lead)
-        private leadRepository:Repository<Lead>
+        private leadRepository:Repository<Lead>,
+
+        private webhookService: WebhookService,
     ) {
         super()
     }
 
     async process(job: Job<BatchJobData>): Promise<void> {
+        console.log('Processing job', job.data);
         const { batchId } = job.data;
         const batch = await this.batchRepository.findOne({
             where: { id: batchId },
@@ -48,6 +52,8 @@ export class BatchProcessor extends WorkerHost {
         batch.status = BatchStatus.COMPLETED;
 
         await this.batchRepository.save(batch);
+
+        await this.webhookService.fireWebhook(batch);
         
     }
 
@@ -73,7 +79,9 @@ export class BatchProcessor extends WorkerHost {
 
             const isDuplicate = allLeads
                                 .filter(l => l.id !== lead.id)
-                                .some(l => l.legalId === lead.legalId);
+                                .some(l => l.legalId === lead.legalId && 
+                                    (l.status === LeadStatus.READY || l.status === LeadStatus.PROCESSING)
+                                );
 
             if (isDuplicate) {
                 throw new Error('duplicate');

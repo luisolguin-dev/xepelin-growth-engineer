@@ -1,4 +1,4 @@
-import { IsString, IsUrl } from "class-validator";
+import { IsString } from "class-validator";
 
 export class CreateLeadDto {
     @IsString()
@@ -7,6 +7,6 @@ export class CreateLeadDto {
     @IsString()
     legalName!: string; 
 
-    @IsUrl()
+    @IsString()
     website!: string; 
 }

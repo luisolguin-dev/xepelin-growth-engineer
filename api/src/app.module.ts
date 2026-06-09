@@ -8,6 +8,7 @@ import { BatchesModule } from './batches/batches.module';
 import { LeadsModule } from './leads/leads.module';
 import { UsersModule } from './users/users.module';
 import { BatchEventsModule } from './batch-events/batch-events.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { BatchEventsModule } from './batch-events/batch-events.module';
     LeadsModule,
     UsersModule,
     BatchEventsModule,
+    WebhookModule,
   ],
   controllers: [AppController],
   providers: [AppService],
