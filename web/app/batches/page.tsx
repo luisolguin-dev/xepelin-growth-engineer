@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 
+
 async function getBatches(): Promise<BatchInterface[]> {
     const response = await fetch(`${API_URL}/batches`, {
         cache: 'no-store'
