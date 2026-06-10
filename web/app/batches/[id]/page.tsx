@@ -115,6 +115,7 @@ export default async function BatchDetailPage({
               <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Domain</TableHead>
               <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Alive</TableHead>
               <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Fit Score</TableHead>
+              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Fit Reason</TableHead>
               <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Ice Breaker</TableHead>
               <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Pain</TableHead>
               <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Error</TableHead>
@@ -150,48 +151,69 @@ export default async function BatchDetailPage({
                     </span>
                   ) : '-'}
                 </TableCell>
-<TableCell style={{ maxWidth: '200px' }}>
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger style={{
-        display: 'block',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        fontSize: '0.875rem',
-        color: '#374151',
-        cursor: 'pointer',
-        maxWidth: '200px'
-      }}>
-        {lead.iceBreaker || '-'}
-      </TooltipTrigger>
-      <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
-        {lead.iceBreaker || '-'}
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
-</TableCell>
                 <TableCell style={{ maxWidth: '200px' }}>
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger style={{
-        display: 'block',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        fontSize: '0.875rem',
-        color: '#374151',
-        cursor: 'pointer',
-        maxWidth: '200px'
-      }}>
-        {lead.painHypothesis || '-'}
-      </TooltipTrigger>
-      <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
-        {lead.painHypothesis || '-'}
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
-</TableCell>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger style={{
+                      display: 'block',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      fontSize: '0.875rem',
+                      color: '#374151',
+                      cursor: 'pointer',
+                      maxWidth: '200px'
+                    }}>
+                      {lead.prospectFitJustification || '-'}
+                    </TooltipTrigger>
+                    <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
+                      {lead.prospectFitJustification || '-'}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </TableCell>
+              <TableCell style={{ maxWidth: '200px' }}>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger style={{
+                      display: 'block',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      fontSize: '0.875rem',
+                      color: '#374151',
+                      cursor: 'pointer',
+                      maxWidth: '200px'
+                    }}>
+                      {lead.iceBreaker || '-'}
+                    </TooltipTrigger>
+                    <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
+                      {lead.iceBreaker || '-'}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </TableCell>
+                <TableCell style={{ maxWidth: '200px' }}>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger style={{
+                        display: 'block',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        fontSize: '0.875rem',
+                        color: '#374151',
+                        cursor: 'pointer',
+                        maxWidth: '200px'
+                      }}>
+                        {lead.painHypothesis || '-'}
+                      </TooltipTrigger>
+                      <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
+                        {lead.painHypothesis || '-'}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </TableCell>
                 <TableCell style={{ fontSize: '0.875rem', color: '#DC2626' }}>
                   {lead.errorReason || lead.aiErrorReason || '-'}
                 </TableCell>

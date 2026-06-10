@@ -10,6 +10,7 @@ export interface LeadInterface {
     mainDomain: string | null;
     isWebsiteAlive: boolean | null;
     prospectFitScore: number | null;
+    prospectFitJustification: string | null;
     iceBreaker: string | null;
     painHypothesis: string | null;
     aiErrorReason: string | null;
