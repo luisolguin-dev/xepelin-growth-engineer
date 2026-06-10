@@ -51,6 +51,9 @@ export class Lead {
     @Column({ type: 'int', nullable: true })
     prospectFitScore!: number | null; 
 
+    @Column({ type: 'varchar', nullable: true })
+    prospectFitJustification!: string | null;
+
     @Column({type: 'varchar', nullable: true })
     iceBreaker!: string | null; 
 

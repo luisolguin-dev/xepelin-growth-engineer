@@ -113,6 +113,7 @@ export class BatchProcessor extends WorkerHost {
                 const aiResult = await this.aiEnrichmentService.enrichLead(lead);
 
                 lead.prospectFitScore = aiResult.prospectFitScore;
+                lead.prospectFitJustification = aiResult.prospectFitJustification;
                 lead.iceBreaker = aiResult.iceBreaker;
                 lead.painHypothesis = aiResult.painHypothesis; 
                 lead.status = LeadStatus.AI_READY
