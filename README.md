@@ -1,98 +1,129 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Xepelin Growth Engineer — Lead Enrichment Pipeline
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Demo: https://graceful-energy-production-ecc9.up.railway.app
+API: https://xepelin-growth-engineer-production.up.railway.app/api
+Repo: https://github.com/luisolguin-dev/xepelin-growth-engineer
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+Prerequisitos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+Node.js 18+
+Docker Desktop
 
-```bash
-$ npm install
-```
 
-## Compile and run the project
 
-```bash
-# development
-$ npm run start
+Levantar localmente
 
-# watch mode
-$ npm run start:dev
+1. Clonar el repo
 
-# production mode
-$ npm run start:prod
-```
+git clone https://github.com/luisolguin-dev/xepelin-growth-engineer.git
 
-## Run tests
+cd xepelin-growth-engineer
 
-```bash
-# unit tests
-$ npm run test
+2. Crear .env en la raíz del proyecto
 
-# e2e tests
-$ npm run test:e2e
+Crear el archivo xepelin-growth-engineer/.env con:
 
-# test coverage
-$ npm run test:cov
-```
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_NAME=xepelin_growth
 
-## Deployment
+Este archivo es leído por docker-compose.yml para crear la base de datos PostgreSQL.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+3. Levantar PostgreSQL y Redis
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+docker compose up -d
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+4. Configurar variables de entorno de la API
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+ Crear .env en la carpeta api
 
-## Resources
+Crear el archivo xepelin-growth-engineer/api/.env con:
 
-Check out a few resources that may come in handy when working with NestJS:
+DB_HOST=localhost
+DB_PORT=5433
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_NAME=xepelin_growth
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+REDIS_HOST=localhost
+REDIS_PORT=6379
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+PORT=3000
+FRONTEND_URL=http://localhost:3001
 
-## Stay in touch
+ANTHROPIC_API_KEY=      
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+5. Iniciar la API
 
-## License
+cd api
+npm install
+npm run start:dev
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+5. Configurar variables de entorno del frontend
+
+Crear web/.env.local:
+
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=    # clerk.com
+CLERK_SECRET_KEY=                     # clerk.com
+
+6. Iniciar el frontend
+
+cd web
+npm install
+npm run dev
+
+La API corre en http://localhost:3000/api y el frontend en http://localhost:3001.
+
+
+Probar el pipeline
+
+Enviar el Anexo A completo desde Postman o curl:
+
+POST http://localhost:3000/api/batches
+Content-Type: application/json
+
+json{
+  "name": "Outbound MX - Batch demo Q1",
+  "segment": "pyme_servicios",
+  "ownerEmail": "sdr.demo@xepelin.com",
+  "webhookUrl": "https://webhook.site/your-uuid",
+  "leads": [
+    { "legalId": "76.123.456-7", "legalName": "Comercializadora Andes SpA", "website": "https://comercializadoraandes.cl" },
+    { "legalId": "MAGE920101AB1", "legalName": "Manufacturas Aguila SA de CV", "website": "https://manufacturasaguila.mx" },
+    { "legalId": "77.987.654-3", "legalName": "Servicios Logisticos del Sur Ltda", "website": "https://logisticadelsur.cl" },
+    { "legalId": "TINP880515XY2", "legalName": "Tecnologia Integral del Norte", "website": "http://tinorte.com.mx" },
+    { "legalId": "76.555.111-9", "legalName": "Importadora Pacifico SA", "website": "https://importadorapacifico.cl" },
+    { "legalId": "GRTE010203QW3", "legalName": "Grupo Textil del Este", "website": "https://grupotextileste.mx" },
+    { "legalId": "77.444.222-K", "legalName": "Constructora Cordillera SpA", "website": "not-a-valid-url" },
+    { "legalId": "AGME950707RT4", "legalName": "Agroexportadora Mediterraneo", "website": "https://agromediterraneo.mx" },
+    { "legalId": "76.123.456-7", "legalName": "Comercializadora Andes SpA", "website": "https://comercializadoraandes.cl" },
+    { "legalId": "78.111.000-2", "legalName": "Distribuidora Central Ltda", "website": "https://distcentral.cl" },
+    { "legalId": "FAQM900909LM5", "legalName": "Fabrica de Alimentos Quetzal", "website": "https://alimentosquetzal.mx" },
+    { "legalId": "76.222.333-4", "legalName": "Soluciones Digitales Austral", "website": "https://digitalaustral.cl" },
+    { "legalId": "PLNE870404ZX6", "legalName": "Plasticos del Noreste SA", "website": "https://plasticosnoreste.mx" },
+    { "legalId": "77.888.999-1", "legalName": "Transportes Bio Bio SpA", "website": "https://transportesbiobio.cl" },
+    { "legalId": "COVE020606BN7", "legalName": "Comercio Verde SA de CV", "website": "" },
+    { "legalId": "76.333.444-5", "legalName": "Maquinarias del Valle Ltda", "website": "https://maqvalle.cl" },
+    { "legalId": "MAGE920101AB1", "legalName": "Manufacturas Aguila SA de CV", "website": "https://manufacturasaguila.mx" },
+    { "legalId": "78.222.111-3", "legalName": "Asesorias Financieras Lican", "website": "https://aflican.cl" },
+    { "legalId": "QUSE110811GH8", "legalName": "Quimica del Sureste", "website": "https://quimicasureste.mx" },
+    { "legalId": "76.444.555-6", "legalName": "Ferreteria Industrial Maipo", "website": "https://ferremaipo.cl" }
+  ]
+}
+
+El endpoint responde 202 Accepted inmediatamente. El procesamiento ocurre en background — seguir el estado en GET /api/batches o en el frontend.
+
+
+Decisiones de AI enrichment
+
+Modelo: Claude Haiku vía Anthropic API
+
+Fuente de datos: Scraping del sitio web de la empresa con cheerio (homepage, 1000 chars máximo).
+
+Segunda fuente: No implementada en el MVP — en producción se agregaría Google Custom Search para mejorar cobertura en PyMEs con sitios inactivos.
+
+Prompt: En español para que los outputs sean directamente usables por los SDRs sin traducción. Output estructurado con prospectFitScore, prospectFitJustification, iceBreaker, painHypothesis.
