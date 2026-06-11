@@ -105,122 +105,126 @@ export default async function BatchDetailPage({
       </div>
 
       <div style={{ background: 'white', borderRadius: '12px', border: '1px solid #E5E7EB', overflow: 'hidden' }}>
-        <Table>
-          <TableHeader>
-            <TableRow style={{ background: '#F8FAFC' }}>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Legal ID</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Legal Name</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Website</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Status</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Domain</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Alive</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Fit Score</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Fit Reason</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Ice Breaker</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Pain</TableHead>
-              <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Error</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {batch.leads.map((lead) => (
-              <TableRow key={lead.id} style={{ borderBottom: '1px solid #F3F4F6' }}>
-                <TableCell style={{ fontFamily: 'monospace', fontSize: '0.875rem' }}>{lead.legalId}</TableCell>
-                <TableCell style={{ fontWeight: '500', color: '#0A1628' }}>{lead.normalizedLegalName || lead.legalName}</TableCell>
-                <TableCell>
-                  <a href={lead.website} target="_blank" rel="noopener noreferrer" 
-                     style={{ color: '#2563EB', textDecoration: 'none', fontSize: '0.875rem' }}>
-                    {lead.website || '-'}
-                  </a>
-                </TableCell>
-                <TableCell><StatusBadge status={lead.status} /></TableCell>
-                <TableCell style={{ color: '#6B7280', fontSize: '0.875rem' }}>{lead.mainDomain || '-'}</TableCell>
-                <TableCell>
-                  {lead.isWebsiteAlive === null ? '-' : 
-                   lead.isWebsiteAlive ? 
-                   <span style={{ color: '#166534' }}>✓</span> : 
-                   <span style={{ color: '#DC2626' }}>✗</span>}
-                </TableCell>
-                <TableCell>
-                  {lead.prospectFitScore !== null ? (
-                    <span style={{ 
-                      fontWeight: '600',
-                      color: lead.prospectFitScore >= 70 ? '#166534' : 
-                             lead.prospectFitScore >= 40 ? '#D97706' : '#DC2626'
-                    }}>
-                      {lead.prospectFitScore}
-                    </span>
-                  ) : '-'}
-                </TableCell>
-                <TableCell style={{ maxWidth: '200px' }}>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger style={{
-                      display: 'block',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      fontSize: '0.875rem',
-                      color: '#374151',
-                      cursor: 'pointer',
-                      maxWidth: '200px'
-                    }}>
-                      {lead.prospectFitJustification || '-'}
-                    </TooltipTrigger>
-                    <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
-                      {lead.prospectFitJustification || '-'}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </TableCell>
-              <TableCell style={{ maxWidth: '200px' }}>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger style={{
-                      display: 'block',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      fontSize: '0.875rem',
-                      color: '#374151',
-                      cursor: 'pointer',
-                      maxWidth: '200px'
-                    }}>
-                      {lead.iceBreaker || '-'}
-                    </TooltipTrigger>
-                    <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
-                      {lead.iceBreaker || '-'}
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </TableCell>
-                <TableCell style={{ maxWidth: '200px' }}>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger style={{
-                        display: 'block',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        fontSize: '0.875rem',
-                        color: '#374151',
-                        cursor: 'pointer',
-                        maxWidth: '200px'
-                      }}>
-                        {lead.painHypothesis || '-'}
-                      </TooltipTrigger>
-                      <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
-                        {lead.painHypothesis || '-'}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </TableCell>
-                <TableCell style={{ fontSize: '0.875rem', color: '#DC2626' }}>
-                  {lead.errorReason || lead.aiErrorReason || '-'}
-                </TableCell>
+          <Table>
+            <TableHeader>
+              <TableRow style={{ background: '#F8FAFC' }}>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Status</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Legal ID</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Legal Name</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Website</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Domain</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Alive</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Error</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Fit Score</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Fit Reason</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Ice Breaker</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>Pain</TableHead>
+                <TableHead style={{ color: '#0A1628', fontWeight: '600' }}>AI Error</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {batch.leads.map((lead) => (
+                <TableRow key={lead.id} style={{ borderBottom: '1px solid #F3F4F6' }}>
+                  <TableCell><StatusBadge status={lead.status} /></TableCell>
+                  <TableCell style={{ fontFamily: 'monospace', fontSize: '0.875rem' }}>{lead.legalId}</TableCell>
+                  <TableCell style={{ fontWeight: '500', color: '#0A1628' }}>{lead.normalizedLegalName || lead.legalName}</TableCell>
+                  <TableCell>
+                    <a href={lead.website} target="_blank" rel="noopener noreferrer"
+                      style={{ color: '#2563EB', textDecoration: 'none', fontSize: '0.875rem' }}>
+                      {lead.website || '-'}
+                    </a>
+                  </TableCell>
+                  <TableCell style={{ color: '#6B7280', fontSize: '0.875rem' }}>{lead.mainDomain || '-'}</TableCell>
+                  <TableCell>
+                    {lead.isWebsiteAlive === null ? '-' :
+                    lead.isWebsiteAlive ?
+                    <span style={{ color: '#166534' }}>✓</span> :
+                    <span style={{ color: '#DC2626' }}>✗</span>}
+                  </TableCell>
+                  <TableCell style={{ fontSize: '0.875rem', color: '#DC2626' }}>
+                    {lead.errorReason || '-'}
+                  </TableCell>
+                  <TableCell>
+                    {lead.prospectFitScore !== null ? (
+                      <span style={{
+                        fontWeight: '600',
+                        color: lead.prospectFitScore >= 70 ? '#166534' :
+                              lead.prospectFitScore >= 40 ? '#D97706' : '#DC2626'
+                      }}>
+                        {lead.prospectFitScore}
+                      </span>
+                    ) : '-'}
+                  </TableCell>
+                  <TableCell style={{ maxWidth: '200px' }}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger style={{
+                          display: 'block',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          fontSize: '0.875rem',
+                          color: '#374151',
+                          cursor: 'pointer',
+                          maxWidth: '200px'
+                        }}>
+                          {lead.prospectFitJustification || '-'}
+                        </TooltipTrigger>
+                        <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
+                          {lead.prospectFitJustification || '-'}
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableCell>
+                  <TableCell style={{ maxWidth: '200px' }}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger style={{
+                          display: 'block',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          fontSize: '0.875rem',
+                          color: '#374151',
+                          cursor: 'pointer',
+                          maxWidth: '200px'
+                        }}>
+                          {lead.iceBreaker || '-'}
+                        </TooltipTrigger>
+                        <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
+                          {lead.iceBreaker || '-'}
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableCell>
+                  <TableCell style={{ maxWidth: '200px' }}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger style={{
+                          display: 'block',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          fontSize: '0.875rem',
+                          color: '#374151',
+                          cursor: 'pointer',
+                          maxWidth: '200px'
+                        }}>
+                          {lead.painHypothesis || '-'}
+                        </TooltipTrigger>
+                        <TooltipContent style={{ maxWidth: '300px', whiteSpace: 'normal' }}>
+                          {lead.painHypothesis || '-'}
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableCell>
+                  <TableCell style={{ fontSize: '0.875rem', color: '#DC2626' }}>
+                    {lead.aiErrorReason || '-'}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
       </div>
     </div>
   );
