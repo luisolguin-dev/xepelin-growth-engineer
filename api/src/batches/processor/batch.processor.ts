@@ -3,11 +3,12 @@ import { Job } from 'bullmq';
 import { BATCH_QUEUE, BatchJobData } from '../batches.constants';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Batch, BatchStatus } from '../entities/batch.entity';
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Lead, LeadStatus } from '../../leads/entities/lead.entity';
 import { NotFoundException } from '@nestjs/common';
 import { WebhookService } from '../../webhook/webhook.service';
 import { AiEnrichmentService } from './ai-enrichment-service';
+
 
 @Processor(BATCH_QUEUE)
 export class BatchProcessor extends WorkerHost {
@@ -79,15 +80,21 @@ export class BatchProcessor extends WorkerHost {
                 throw new Error('website is not a valid URL')
             }
 
-            const isDuplicate = allLeads
-                                .filter(l => l.id !== lead.id)
-                                .some(l => l.legalId === lead.legalId && 
-                                    (l.status === LeadStatus.READY || l.status === LeadStatus.PROCESSING)
-                                );
+            const existingLead = await this.leadRepository.findOne({
+            where: {
+                batchId: lead.batchId,
+                legalId: lead.legalId,
+                id: Not(lead.id)
+            }
+            });
+
+            const isDuplicate = existingLead !== null && 
+            existingLead.status !== LeadStatus.FAILED && 
+            existingLead.status !== LeadStatus.AI_FAILED;
 
             if (isDuplicate) {
-                throw new Error('duplicate');
-            }
+            throw new Error('duplicate');
+}
 
             lead.mainDomain = parsedUrl.hostname;
             lead.normalizedLegalName = lead.legalName.trim().toUpperCase();
