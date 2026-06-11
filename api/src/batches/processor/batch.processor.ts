@@ -43,7 +43,13 @@ export class BatchProcessor extends WorkerHost {
         await this.batchRepository.save(batch);
 
         for (const lead of batch.leads) {
-            await this.processLead(lead, batch.leads);
+        if (
+            lead.status === LeadStatus.AI_READY ||
+            lead.status === LeadStatus.READY
+        ) {
+            continue;
+        }
+        await this.processLead(lead, batch.leads);
         }
 
         const updatedLeads = await this.leadRepository.find({
